@@ -53,7 +53,6 @@ api.post('/signup', async (req, res) => {
 
 api.post('/signin', (req, res) => {
   const login = passport.authenticate('local', { session: false }, (err, user) => {
-    console.log("🚀 ~ file: auth.js ~ line 55 ~ login ~ err", err)
     if (err) {
       return res.status(400).json({ error: err })
     }
