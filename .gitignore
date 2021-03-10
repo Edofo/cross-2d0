@@ -1,7 +1,16 @@
+# dotenv environment variables file
+.envnode_modules
+
 # Expo
 .expo
 __generated__
-web-build
+web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
 
 # Expo Client builds
 /client-builds
@@ -17,6 +26,9 @@ apps/bare-expo/deploy-url.txt
 docs/pages/versions/*/react-native/ADDED_*.md
 docs/pages/versions/*/react-native/REMOVED_*.md
 docs/pages/versions/*/react-native/*.diff
+
+# macOS
+.DS_Store
 
 # Logs
 logs
