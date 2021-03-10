@@ -1,13 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-}
-
-generator client {
-  provider = "prisma-client-js"
 }
 
 model User {
@@ -16,19 +13,19 @@ model User {
   lastname          String
   gender            Gender   @default(NA)
   email             String   @unique
+  birthdate         DateTime 
   encryptedPassword String
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
-  birthdate         DateTime
 }
 
 model Task {
-  id          Int      @id @default(autoincrement())
-  content     String   @default("Hello world")
-  isComplete  Boolean
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  userId      Int
+  id         Int      @id @default(autoincrement())
+  content    String   @default("Hello world")
+  isComplete Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  userId     Int
 }
 
 enum Gender {

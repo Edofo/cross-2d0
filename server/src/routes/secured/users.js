@@ -13,6 +13,7 @@ api.get('/', async (req, res) => {
         firstname: true,
         lastname: true,
         email: true,
+        birthdate: true,
         createdAt: true,
         updatedAt: true
       }
