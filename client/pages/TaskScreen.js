@@ -1,51 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Button } from 'react-native';
 
 import Task from "../components/Task";
 
-class TaskScreen extends Component {
-  constructor(props) {
-    super(props);
+export const TaskScreen = ({ navigation }) => {
+    const [tasks, setTask] = useState([]);
 
-    this.state = { tasks: [] };
-  }
+    useEffect(() => {
+        fetch("http://localhost:4242/api/task/1")
+          .then(response => response.json())
+          .then(data => setTask(data.data.task));
+      }, []);
 
-  async componentDidMount() {
-
-    const response = await fetch(`http://localhost:4242/api/task/1`);
-    const tasks = await response.json(); 
-
-    this.setState({ tasks });
-
-  }
-
-  render() {
-    
-    if (!this.state.tasks.data) {
-      return <Text>LOADING</Text>
+    if (!tasks) {
+        return <Text>LOL</Text>
     }
 
-
-    const aTask = this.state.tasks.data.task
-   
+    
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text>Details Screen</Text>
-          <Button
-            title="Go to Home"
-            onPress={() => navigation.navigate('Home')}
-          />
-          {aTask.map((task) => (
-            <Task
-              key={task.id}
-              id={task.id}
-              content={task.content}
-              isComplete={task.isComplete}
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text>Details Screen</Text>
+            <Button
+              title="Go to Home"
+              onPress={() => navigation.navigate('Home')}
             />
-          ))}
-      </View>
+            {tasks.map((task) => (
+              <Task
+                key={task.id}
+                id={task.id}
+                content={task.content}
+                isComplete={task.isComplete}
+              />
+            ))}
+        </View>
     )
-  }
 }
-
-export default TaskScreen;

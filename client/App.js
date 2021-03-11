@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeScreen } from './pages/Home';
-import TaskScreen from './pages/TaskScreen';
+import { TaskScreen } from './pages/TaskScreen';
 
 import { Test } from './pages/Test';
 
