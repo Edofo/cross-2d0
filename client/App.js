@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeScreen } from './pages/Home';
-import { DetailsScreen } from './pages/Details';
+import DetailsScreen from './pages/Details';
 
 const Stack = createStackNavigator();
 
