@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import { Picker } from '@react-native-picker/picker';
 
-export const Test = ({ navigation }) => {
+export const Gpicker = () => {
 
     const [selectedValue, setSelectedValue] = useState("");
 
