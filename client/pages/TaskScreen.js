@@ -3,7 +3,7 @@ import { Text, View, Button } from 'react-native';
 
 import Task from "../components/Task";
 
-class DetailsScreen extends Component {
+class TaskScreen extends Component {
   constructor(props) {
     super(props);
 
@@ -17,19 +17,14 @@ class DetailsScreen extends Component {
 
     this.setState({ tasks });
 
-    console.log(tasks);
   }
 
   render() {
     
     if (!this.state.tasks.data) {
-      return <Text>LOL</Text>
+      return <Text>LOADING</Text>
     }
 
-    console.log(this.state.tasks.data) 
-    console.log(this.state.tasks.data.task) 
-    console.log(this.state.tasks.data.task[0])
-    console.log(this.state.tasks.data.task[0].id)  
 
     const aTask = this.state.tasks.data.task
    
@@ -40,10 +35,12 @@ class DetailsScreen extends Component {
             title="Go to Home"
             onPress={() => navigation.navigate('Home')}
           />
-          {aTask.map((task, index) => (
+          {aTask.map((task) => (
             <Task
-              key={task.index}
+              key={task.id}
+              id={task.id}
               content={task.content}
+              isComplete={task.isComplete}
             />
           ))}
       </View>
@@ -51,4 +48,4 @@ class DetailsScreen extends Component {
   }
 }
 
-export default DetailsScreen;
+export default TaskScreen;

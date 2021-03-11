@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeScreen } from './pages/Home';
-import DetailsScreen from './pages/Details';
+import TaskScreen from './pages/TaskScreen';
 
 const Stack = createStackNavigator();
 
@@ -15,7 +15,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Details" component={DetailsScreen} />
+        <Stack.Screen name="Task" component={TaskScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
