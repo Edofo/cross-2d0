@@ -1,167 +1,107 @@
-import React from "react";
-import { StyleSheet, View, TouchableOpacity, Text, TextInput } from "react-native";
+import 'react-native-gesture-handler';
+import React from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions } from "react-native";
+
+const { width: WIDTH } = Dimensions.get('window')
 
 export function LoginScreen({ navigation }) {
+
+  const [text, setText] = React.useState('');
+  const [text2, setText2] = React.useState('');
+
   return (
-    <View style={styles.container}>
-      <View style={styles.button2Row}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Register')}
-          style={styles.button2}
-        >
-          <Text style={styles.register}>Register</Text>
-        </TouchableOpacity>
-        <Text style={styles.loremIpsum}></Text>
+
+    <ScrollView>
+
+      <View style={styles.container}>
+
+        <Text style={styles.toDoListTitle}>To-Do list</Text>
+
+        <View style={styles.buttonArrondi}>
+
+          <TextInput
+              style={styles.textInput}
+              placeholder='Email'
+              label="Email"
+              value={text}
+              onChangeText={text => setText(text)}
+            />
+
+        </View>
+
+        <View style={styles.buttonArrondi}>
+
+          <TextInput
+              style={styles.textInput}
+              placeholder='Password'
+              label="Password"
+              value={text2}
+              onChangeText={text2 => setText2(text2)}
+            />
+
+        </View>
+
+        <View style={styles.button}>
+
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("")}
+            style={styles.btnBG}>
+            <Text style={styles.front}>Login</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("Home")}
+            style={styles.btnBG}>
+            <Text style={styles.front}>Register</Text>
+          </TouchableOpacity>
+
+        </View>
+
       </View>
-      <View style={styles.rect}>
-        <TextInput placeholder="Email" style={styles.email}></TextInput>
-      </View>
-      <View style={styles.rect2}>
-        <TextInput placeholder="Password" style={styles.password}></TextInput>
-      </View>
-      <View style={styles.toDoListRow}>
-        <Text style={styles.toDoList}>To-Do List</Text>
-      </View>
-      <TouchableOpacity
-        onPress={() => props.navigation.navigate("ToDolist")}
-        style={styles.button}
-      >
-        <Text style={styles.text}>Login</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    </ScrollView>
+  )
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    alignItems: 'center',
+    
   },
-  button2: {
-    width: 138,
-    height: 56,
-    backgroundColor: "#E6E6E6"
+  toDoListTitle: {
+    color: 'gray',
+    fontWeight: 'bold',
+    fontSize: 35,
+    marginTop: 80,
+    margin: 60,
+    marginBottom: 80,
   },
-  register: {
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: 18,
-    width: 68,
-    fontSize: 18,
-    marginTop: 19,
-    marginLeft: 35
-  },
-  loremIpsum: {
-    fontFamily: "roboto-regular",
-    color: "#121212"
-  },
-  button2Row: {
-    height: 56,
-    flexDirection: "row",
-    marginTop: 474,
-    marginLeft: 132,
-    marginRight: 105
-  },
-  rect: {
-    width: 272,
-    height: 61,
-    backgroundColor: "#E6E6E6",
+  buttonArrondi: { 
+    backgroundColor: "lightgray",
     borderRadius: 21,
-    marginTop: -356,
-    alignSelf: "center"
+    width: WIDTH - 55,
+    height: 55,
+    margin: 15,
   },
-  email: {
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: 31,
-    width: 244,
-    marginTop: 16,
-    marginLeft: 20
-  },
-  email1: {
-    top: 16,
-    left: 14,
-    position: "absolute",
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: 31,
-    width: 244
-  },
-  rect2: {
-    top: 0,
-    left: 0,
-    width: 272,
-    height: 61,
-    position: "absolute",
-    backgroundColor: "#E6E6E6",
-    borderRadius: 21
-  },
-  password: {
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: 31,
-    width: 244,
-    marginTop: 16,
-    marginLeft: 14
-  },
-  email1Stack: {
-    width: 272,
-    height: 61,
-    marginTop: 32,
-    marginLeft: 58
-  },
-  toDoList: {
-    fontFamily: "roboto-700",
-    color: "#121212",
-    height: 50,
-    width: 107,
-    fontSize: 20
-  },
-  toDoList1: {
-    top: 25,
-    left: 0,
-    position: "absolute",
-    fontFamily: "roboto-700",
-    color: "#121212",
-    height: 50,
-    width: 107,
-    fontSize: 20
-  },
-  toDoList2: {
-    top: 0,
-    left: 0,
-    position: "absolute",
-    fontFamily: "roboto-700",
-    color: "#121212",
-    height: 50,
-    width: 107,
-    fontSize: 20
-  },
-  toDoList1Stack: {
-    width: 107,
-    height: 75,
-    marginLeft: 272
-  },
-  toDoListRow: {
-    height: 75,
-    flexDirection: "row",
-    marginTop: -252,
-    marginLeft: 140,
-    marginRight: -251
+  textInput: {
+    height: 55, 
+    paddingLeft: 10
   },
   button: {
-    width: 138,
-    height: 56,
-    backgroundColor: "#E6E6E6",
-    marginTop: 231,
-    marginLeft: 132
+    marginTop: 30,
   },
-  text: {
-    fontFamily: "roboto-regular",
-    color: "#121212",
-    height: 18,
-    width: 46,
-    fontSize: 18,
-    marginTop: 19,
-    marginLeft: 39
+  btnBG: {
+    backgroundColor: "#636466",
+    width: 138,
+    height: 60,
+    margin: 10,
+  },
+  front:{
+    marginTop: 'auto',
+    alignSelf:'center',
+    color: 'yellow',
+    height: 45,
+    fontSize: 20,
   }
 });

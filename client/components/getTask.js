@@ -23,13 +23,14 @@ export function Task(props) {
             alignSelf: 'center',
             marginTop: 15,
             borderRadius: 5,
-            backgroundColor: 'grey',
+            backgroundColor: 'lightgray',
         },
         task: {
             flex: 1,
             flexDirection: "row",
             justifyContent: 'center',
             alignItems: 'center',
+            marginLeft: 20,
         },  
         text: {
             lineHeight: 70,
