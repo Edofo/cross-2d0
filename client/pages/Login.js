@@ -1,13 +1,38 @@
 import 'react-native-gesture-handler';
-import React from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions } from "react-native";
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert } from "react-native";
 
 const { width: WIDTH } = Dimensions.get('window')
 
 export function LoginScreen({ navigation }) {
 
-  const [text, setText] = React.useState('');
-  const [text2, setText2] = React.useState('');
+  const [login, setLogin] = useState({
+    email: 'asss',
+    password: 'aaa'
+  })
+
+  function submit() {
+
+    fetch(`http://192.168.56.1:4242/api/auth/signin`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: login.email,
+            password: login.password
+        })
+        })
+
+        .then((response) => response.json())
+        .then((responseData) => {
+        Alert.alert('Test')
+    })
+    .catch((error) =>{
+        console.error(error);
+    }) 
+  };    
 
   return (
 
@@ -23,8 +48,8 @@ export function LoginScreen({ navigation }) {
               style={styles.textInput}
               placeholder='Email'
               label="Email"
-              value={text}
-              onChangeText={text => setText(text)}
+              value={login.email}
+              onChangeText={(text) => { setLogin({ email: text }) }}
             />
 
         </View>
@@ -35,8 +60,8 @@ export function LoginScreen({ navigation }) {
               style={styles.textInput}
               placeholder='Password'
               label="Password"
-              value={text2}
-              onChangeText={text2 => setText2(text2)}
+              value={login.password}
+              onChangeText={(text) => { setLogin({ password: text }) }}
             />
 
         </View>
@@ -44,13 +69,13 @@ export function LoginScreen({ navigation }) {
         <View style={styles.button}>
 
           <TouchableOpacity
-            onPress={() => props.navigation.navigate("")}
+            onPress={() => submit()}
             style={styles.btnBG}>
             <Text style={styles.front}>Login</Text>
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => props.navigation.navigate("Home")}
+            onPress={() => navigation.navigate("Home")}
             style={styles.btnBG}>
             <Text style={styles.front}>Register</Text>
           </TouchableOpacity>
@@ -67,7 +92,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    
+
   },
   toDoListTitle: {
     color: 'gray',
