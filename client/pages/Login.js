@@ -36,6 +36,14 @@ export function LoginScreen({ navigation }) {
     }) 
   };    
 
+
+  function handleEmail(text) {
+    setLogin({ email: text })
+  }
+  function handlePassword(text) {
+    setLogin({ password: text })
+  }
+
   return (
 
     <ScrollView>
@@ -51,7 +59,7 @@ export function LoginScreen({ navigation }) {
               placeholder='Email'
               label="Email"
               value={login.email}
-              onChangeText={(text) => { setLogin({ email: text }) }}
+              onChangeText={(text) => handleEmail(text)}
             />
 
         </View>
@@ -63,7 +71,7 @@ export function LoginScreen({ navigation }) {
               placeholder='Password'
               label="Password"
               value={login.password}
-              onChangeText={(text) => { setLogin({ password: text }) }}
+              onChangeText={(text) => handlePassword(text)}
             />
 
         </View>
