@@ -2,19 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Button, TextInput, Alert, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import Task from "../components/getTask";
-
 const { width: WIDTH } = Dimensions.get('window')
 
 export const TaskScreen = ({ navigation }) => {
     // GET ALL TASK OF USER
     const [tasks, setTask] = useState([]);
 
-    useEffect(() => {
-        fetch("http://192.168.56.1:4242/api/task/1")
+     useEffect(() => {
+        fetch("http://localhost:4242/api/task/1")
           .then(response => response.json())
           .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
       }, []);
+    
 
     if (!tasks) {
         return <Text>LOADING</Text>
@@ -28,7 +27,7 @@ export const TaskScreen = ({ navigation }) => {
 
     function submit() {
 
-      fetch(`http://192.168.56.1:4242/api/task/add/1`, {
+      fetch(`http://localhost:4242/api/task/add/1`, {
           method: 'POST',
           headers: {
               'Accept': 'application/json',
@@ -42,11 +41,60 @@ export const TaskScreen = ({ navigation }) => {
           .then((response) => response.json())
           .then((responseData) => {
           Alert.alert('Your task has been added to the to do list')
+          fetch("http://localhost:4242/api/task/1")
+                .then(response => response.json())
+                .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
       })
       .catch((error) =>{
           console.error(error);
       }) 
     };    
+    
+
+    // EDIT TASK
+
+    function editTask(id) {
+
+      fetch(`http://localhost:4242/api/task/edit/${id}`, {
+          method: 'PATCH',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          })
+          .then((response) => response.json())
+          .then((responseData) => {  
+            fetch("http://localhost:4242/api/task/1")
+                .then(response => response.json())
+                .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
+      })
+      .catch((error) =>{
+          console.error(error);
+      }) 
+  };   
+  
+
+  // DELETE TASK
+
+  function deleteTask(id) {
+
+      fetch(`http://localhost:4242/api/task/delete/${id}`, {
+          method: 'DELETE',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          })
+          .then((response) => response.json())
+          .then((responseData) => {  
+            fetch("http://localhost:4242/api/task/1")
+                .then(response => response.json())
+                .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
+      })
+      .catch((error) =>{
+          console.error(error);
+      }) 
+  };  
 
     return (
         <ScrollView style={styles.container}>
@@ -62,14 +110,79 @@ export const TaskScreen = ({ navigation }) => {
 
             <Text style={styles.title}>My list</Text>
             <View>
+
+
+
               {tasks.map((task) => (
-                <Task
-                  key={task.id}
-                  id={task.id}
-                  content={task.content}
-                  isComplete={task.isComplete}
-                />
+                <View key={task.id}>
+
+                {task.isComplete ?
+                <View style={styles.finish}>
+    
+                    <View style={styles.task}>
+    
+                        <Text style={styles.true}>{task.content}</Text> 
+    
+                        <View style={styles.icons}>
+                            
+                            <TouchableOpacity>
+                                <Icon
+                                    name="trash"
+                                    type="MaterialIcons"
+                                    style={styles.icon}
+                                    onPress={() => deleteTask(task.id)}
+                                />
+                            </TouchableOpacity>
+    
+                            <TouchableOpacity>
+                                <Icon
+                                    name="times"
+                                    type="MaterialIcons"
+                                    style={styles.icon}
+                                    onPress={() => editTask(task.id)}
+                                />
+                            </TouchableOpacity> 
+    
+                        </View>
+    
+                    </View>
+                </View>
+                :
+                <View style={styles.notfinish}>
+                                            
+                    <View style={styles.task}>
+    
+                        <Text style={styles.false, styles.text}>{task.content}</Text>
+    
+                        <View style={styles.icons}>
+                            
+                            <TouchableOpacity>
+                                <Icon
+                                    name="trash"
+                                    type="MaterialIcons"
+                                    style={styles.icon}
+                                    onPress={() => deleteTask(task.id)}
+                                />
+                            </TouchableOpacity>
+    
+                            <TouchableOpacity>
+                                <Icon
+                                    name="check"
+                                    type="MaterialIcons"
+                                    style={styles.icon}
+                                    onPress={() => editTask(task.id)}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+                }
+            </View>
               ))}
+
+
+
+
             </View>
             <View
             style={{margin:20, marginTop:100}}
@@ -104,4 +217,52 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingBottom: 20,
   },
+  notfinish: {
+    width: WIDTH - 25,
+    flex: 1,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    marginTop: 15,
+    backgroundColor: '#E9E9E9',
+    borderWidth: 2,
+    borderColor: "gray",
+    borderRadius: 5,
+  },
+  finish: {
+      width: WIDTH - 25,
+      flex: 1,
+      alignSelf: 'center',
+      marginTop: 15,
+      borderRadius: 5,
+      backgroundColor: 'lightgray',
+      borderWidth: 2,
+      borderColor: "gray",
+  },
+  task: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 20,
+  },  
+  text: {
+      lineHeight: 70,
+      left: 10,
+      fontSize: 23,
+  },
+  true: {
+      lineHeight: 70,
+      left: 10,
+      fontSize: 23,
+      textDecorationLine: 'line-through',
+  },
+  icons: {
+      flex: 1,
+      flexDirection: 'row-reverse',
+      alignItems: 'flex-end',
+  },
+  icon: {
+      fontSize: 35,
+      marginRight: 20,
+  }
 });

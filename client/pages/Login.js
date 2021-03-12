@@ -8,11 +8,14 @@ export function LoginScreen({ navigation }) {
 
   const [login, setLogin] = useState({
     email: 'asss',
-    password: 'aaa'
+    password: 'aaa',
+    check_textInputChange: false,
+    secureTextEntry: true
   })
 
   function submit() {
 
+    console.log(login)
     fetch(`http://192.168.56.1:4242/api/auth/signin`, {
         method: 'POST',
         headers: {
@@ -27,7 +30,6 @@ export function LoginScreen({ navigation }) {
 
         .then((response) => response.json())
         .then((responseData) => {
-        Alert.alert('Test')
     })
     .catch((error) =>{
         console.error(error);
