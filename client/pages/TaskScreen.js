@@ -37,9 +37,9 @@ export const TaskScreen = ({ navigation }) => {
           })
           })
 
-              .then((response) => response.json())
-              .then((responseData) => {
-              console.log("RESULTS HERE:", responseData)
+          .then((response) => response.json())
+          .then((responseData) => {
+          console.log("RESULTS HERE:", responseData)
       })
       .catch((error) =>{
           console.error(error);
