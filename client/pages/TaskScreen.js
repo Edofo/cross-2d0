@@ -81,7 +81,7 @@ export const TaskScreen = ({ navigation }) => {
             />
             <Button title="submit" onPress={() => { submit() }} />
         </View>
-        </ScrollView>
+      </ScrollView>
     )
 }
 
