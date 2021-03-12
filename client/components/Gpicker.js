@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { View, Dimensions, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const WIDTH = Dimensions.get('window').width;
 
 export const Gpicker = () => {
 
@@ -31,7 +34,7 @@ export const Gpicker = () => {
     picker: {
       width: 265,
       height: 50,
-      color: 'rgba(255, 255, 255, 0.7)'
+      color: 'rgba(255, 255, 255, 0.7)',
     },
     input: {
       width: WIDTH - 55,
@@ -39,7 +42,7 @@ export const Gpicker = () => {
       borderRadius: 45,
       fontSize: 16,
       paddingLeft: 45,
-      backgroundColor: 'rgba(0, 0, 0, 0.35)',
+      backgroundColor: 'rgba(0, 0, 0, 0.35',
       color: 'rgba(255, 255, 255, 0.7)',
       marginHorizontal: 25,
     },

@@ -1,20 +1,45 @@
-import React, { useState, useEffect } from 'react';
-import { Text, View, Button } from 'react-native';
-import {Picker} from '@react-native-picker/picker';
+import React, { useState } from 'react';
+import { Button, Text, TextInput, View } from 'react-native';
 
-export const Test = ({ navigation }) => {
+export function handleTaskFormSubmit() {
 
-  const [selectedLanguage, setSelectedLanguage] = useState();
+    const [task, addTask] = useState({
+        content: ''
+    })
 
+    function submit() {
+        console.log(task)
 
+        fetch(`http://localhost:4242/api/task/add/1`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: task.content,
+            })
+            })
+
+                .then((response) => response.json())
+                .then((responseData) => {
+                console.log("RESULTS HERE:", responseData)
+        })
+        .catch((error) =>{
+            console.error(error);
+        }) 
+    };
+    
     return (
-      <Picker
-      selectedValue={selectedLanguage}
-      onValueChange={(itemValue, itemIndex) =>
-        setSelectedLanguage(itemValue)
-      }>
-      <Picker.Item label="Java" value="java" />
-      <Picker.Item label="JavaScript" value="js" />
-    </Picker>
-    )
-}
+        <View
+            style={{margin:20, marginTop:100}}
+        >
+            <TextInput
+                placeholder="Enter content"
+                onChangeText={(text) => { addTask({ content: text }) }}
+                style={{ borderWidth:2, borderColor:'skyblue', margin:20 }}
+            />
+            <Button title="submit" onPress={() => { submit() }} />
+        </View>
+    );
+};
