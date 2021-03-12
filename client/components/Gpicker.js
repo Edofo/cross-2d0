@@ -3,7 +3,7 @@ import { View, Dimensions, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const WIDTH = Dimensions.get('window').width;
+const { width: WIDTH } = Dimensions.get('window')
 
 export const Gpicker = () => {
 
