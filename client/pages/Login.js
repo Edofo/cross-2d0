@@ -1,22 +1,20 @@
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width: WIDTH } = Dimensions.get('window')
 
 export function LoginScreen({ navigation }) {
 
   const [login, setLogin] = useState({
-    email: 'asss',
-    password: 'aaa',
-    check_textInputChange: false,
-    secureTextEntry: true
+    email: '',
+    password: '',
   })
 
   function submit() {
 
-    console.log(login)
-    fetch(`http://192.168.56.1:4242/api/auth/signin`, {
+    fetch(`http://localhost:4242/api/auth/signin`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -24,17 +22,24 @@ export function LoginScreen({ navigation }) {
         },
         body: JSON.stringify({
             email: login.email,
-            password: login.password
+            password: login.password,
         })
         })
-
         .then((response) => response.json())
         .then((responseData) => {
+        Alert.alert('Your task has been added to the to do list')
+        console.log(responseData)
+        try {
+          AsyncStorage.setItem('token', responseData.data.token)
+          navigation.navigate('Home2')
+        } catch (e) {
+          console.log(e)
+        }
     })
     .catch((error) =>{
         console.error(error);
     }) 
-  };    
+  }; 
 
 
   function handleEmail(text) {
@@ -59,7 +64,7 @@ export function LoginScreen({ navigation }) {
               placeholder='Email'
               label="Email"
               value={login.email}
-              onChangeText={(text) => handleEmail(text)}
+              onEndEditing={(text) => handleEmail(text)}
             />
 
         </View>
@@ -71,7 +76,7 @@ export function LoginScreen({ navigation }) {
               placeholder='Password'
               label="Password"
               value={login.password}
-              onChangeText={(text) => handlePassword(text)}
+              onEndEditing={(text) => handlePassword(text)}
             />
 
         </View>
