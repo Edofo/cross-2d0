@@ -27,15 +27,17 @@ export function LoginScreen({ navigation }) {
         })
         .then((response) => response.json())
         .then((responseData) => {
-        Alert.alert('Your task has been added to the to do list')
-        console.log(responseData)
-        try {
-          AsyncStorage.setItem('token', responseData.data.token)
-          navigation.navigate('Home2')
-        } catch (e) {
-          console.log(e)
-        }
-    })
+          Alert.alert('Your task has been added to the to do list')
+          console.log(responseData)
+          if (!responseData.data.user == false) {
+            try {
+              AsyncStorage.setItem('token', responseData.data.token)
+              navigation.navigate('Home2')
+            } catch (e) {
+              console.log(e)
+            }
+          }
+        })
     .catch((error) =>{
         console.error(error);
     }) 
