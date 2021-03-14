@@ -8,8 +8,8 @@ const { width: WIDTH } = Dimensions.get('window')
 export function LoginScreen({ navigation }) {
 
   const [login, setLogin] = useState({
-    email: '',
-    password: '',
+    email: 'nolan@gmail.com',
+    password: '12345',
   })
 
   function submit() {
@@ -27,7 +27,6 @@ export function LoginScreen({ navigation }) {
         })
         .then((response) => response.json())
         .then((responseData) => {
-          Alert.alert('Your task has been added to the to do list')
           console.log(responseData)
           if (!responseData.data.user == false) {
             try {
@@ -36,6 +35,8 @@ export function LoginScreen({ navigation }) {
             } catch (e) {
               console.log(e)
             }
+          } else {
+            Alert.alert('THIS ACCOUNT DOSEN\'T EXIST')
           }
         })
     .catch((error) =>{

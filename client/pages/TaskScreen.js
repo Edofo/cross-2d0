@@ -2,19 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, Button, TextInput, Alert, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwt_decode from "jwt-decode";
+
 const { width: WIDTH } = Dimensions.get('window')
 
 export const TaskScreen = ({ navigation }) => {
-    // GET ALL TASK OF USER
+    const [user, setUser] = useState([])
     const [tasks, setTask] = useState([]);
 
-     useEffect(() => {
-        fetch("http://localhost:4242/api/task/1")
-          .then(response => response.json())
-          .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
-      }, []);
-    
+    useEffect(() => {
+      try {
+        const value = AsyncStorage.getItem('token')
+        .then((token) => { 
+          const decryptToken = jwt_decode(token);
+          setUser(decryptToken)
 
+            fetch(`http://localhost:4242/api/task/${decryptToken.id}`)
+                .then(response => response.json())
+                .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
+        })
+      } catch(e) {
+        console.log(e)
+      }
+    },[])
+
+    // GET ALL TASK OF USER
+    
     if (!tasks) {
         return <Text>LOADING</Text>
     }
@@ -27,27 +41,27 @@ export const TaskScreen = ({ navigation }) => {
 
     function submit() {
 
-      fetch(`http://localhost:4242/api/task/add/1`, {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-              content: task.content,
-          })
-          })
+        fetch(`http://localhost:4242/api/task/add/${user.id}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                content: task.content,
+            })
+            })
 
-          .then((response) => response.json())
-          .then((responseData) => {
-          Alert.alert('Your task has been added to the to do list')
-          fetch("http://localhost:4242/api/task/1")
+            .then((response) => response.json())
+            .then((responseData) => {
+            Alert.alert('Your task has been added to the to do list')
+            fetch(`http://localhost:4242/api/task/${user.id}`)
                 .then(response => response.json())
                 .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
-      })
-      .catch((error) =>{
-          console.error(error);
-      }) 
+        })
+        .catch((error) =>{
+            console.error(error);
+        }) 
     };    
     
 
@@ -55,46 +69,46 @@ export const TaskScreen = ({ navigation }) => {
 
     function editTask(id) {
 
-      fetch(`http://localhost:4242/api/task/edit/${id}`, {
-          method: 'PATCH',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          })
-          .then((response) => response.json())
-          .then((responseData) => {  
-            fetch("http://localhost:4242/api/task/1")
+        fetch(`http://localhost:4242/api/task/edit/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            })
+            .then((response) => response.json())
+            .then((responseData) => {  
+            fetch(`http://localhost:4242/api/task/${user.id}`)
                 .then(response => response.json())
                 .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
-      })
-      .catch((error) =>{
-          console.error(error);
-      }) 
+        })
+        .catch((error) =>{
+            console.error(error);
+        }) 
   };   
   
 
   // DELETE TASK
 
-  function deleteTask(id) {
+    function deleteTask(id) {
 
-      fetch(`http://localhost:4242/api/task/delete/${id}`, {
-          method: 'DELETE',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          })
-          .then((response) => response.json())
-          .then((responseData) => {  
-            fetch("http://localhost:4242/api/task/1")
+        fetch(`http://localhost:4242/api/task/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            })
+            .then((response) => response.json())
+            .then((responseData) => {  
+            fetch(`http://localhost:4242/api/task/${user.id}`)
                 .then(response => response.json())
                 .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
-      })
-      .catch((error) =>{
-          console.error(error);
-      }) 
-  };  
+        })
+        .catch((error) =>{
+            console.error(error);
+        }) 
+    };  
 
     return (
         <ScrollView style={styles.container}>

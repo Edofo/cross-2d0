@@ -40,7 +40,7 @@ api.post('/signup', async (req, res) => {
       }
     })
 
-    const payload = { email }
+    const payload = { email, id }
     dotenv.config()
     const token = jwt.sign(payload, process.env.JWT_ENCRYPTION)
 
@@ -57,8 +57,8 @@ api.post('/signin', (req, res) => {
       return res.status(400).json({ error: err })
     }
 
-    const { email } = user
-    const payload = { email }
+    const { email, id } = user
+    const payload = { email, id }
     dotenv.config()
     const token = jwt.sign(payload, process.env.JWT_ENCRYPTION)
     res.json({ data: { user, token } })

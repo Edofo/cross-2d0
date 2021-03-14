@@ -13,14 +13,11 @@ const Stack = createStackNavigator();
 export default function App() {
 
   const [Logged, setLogged] = useState(false)
-  const [Token, setToken] = useState("")
-
 
   useEffect(() => {
     try {
       const value = AsyncStorage.getItem('token')
       .then((login) => { login ? setLogged(true) : setLogged(false)})
-      .then((token) => { token ? setToken(token) : setToken("")})      
     } catch(e) {
       console.log(e)
     }
@@ -41,7 +38,9 @@ export default function App() {
           <Stack.Screen name="Login" component={LoginScreen} />
       }
         <Stack.Screen name="Home2" component={HomeScreen} />
+        <Stack.Screen name="Login2" component={LoginScreen} />
         <Stack.Screen name="Task" component={TaskScreen} />
+        <Stack.Screen name="Register" component={HomeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
