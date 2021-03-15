@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HomeScreen } from './pages/Home';
 import { TaskScreen } from './pages/TaskScreen';
 import { LoginScreen } from './pages/Login';
+import { RegisterScreen } from './pages/Register';
+
 
 const Stack = createStackNavigator();
 
@@ -40,7 +42,7 @@ export default function App() {
         <Stack.Screen name="Home2" component={HomeScreen} />
         <Stack.Screen name="Login2" component={LoginScreen} />
         <Stack.Screen name="Task" component={TaskScreen} />
-        <Stack.Screen name="Register" component={HomeScreen} />
+        <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

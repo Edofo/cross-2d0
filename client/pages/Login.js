@@ -8,8 +8,8 @@ const { width: WIDTH } = Dimensions.get('window')
 export function LoginScreen({ navigation }) {
 
   const [login, setLogin] = useState({
-    email: 'nolan@gmail.com',
-    password: '12345',
+    email: '',
+    password: '',
   })
 
   function submit() {
@@ -27,6 +27,7 @@ export function LoginScreen({ navigation }) {
         })
         .then((response) => response.json())
         .then((responseData) => {
+          console.log(login)
           console.log(responseData)
           if (!responseData.data.user == false) {
             try {
@@ -46,10 +47,10 @@ export function LoginScreen({ navigation }) {
 
 
   function handleEmail(text) {
-    setLogin({ email: text })
+    setLogin({ email: text, password: login.password})
   }
   function handlePassword(text) {
-    setLogin({ password: text })
+    setLogin({ email: login.email, password: text })
   }
 
   return (
@@ -58,16 +59,16 @@ export function LoginScreen({ navigation }) {
 
       <View style={styles.container}>
 
-        <Text style={styles.toDoListTitle}>To-Do list</Text>
+        <Text style={styles.toDoListTitle}>Login</Text>
 
         <View style={styles.buttonArrondi}>
 
           <TextInput
               style={styles.textInput}
-              placeholder='Email'
-              label="Email"
+              autoCorrect={false}
+              placeholder={'Email'}
               value={login.email}
-              onEndEditing={(text) => handleEmail(text)}
+              onChangeText={handleEmail}
             />
 
         </View>
@@ -76,10 +77,10 @@ export function LoginScreen({ navigation }) {
 
           <TextInput
               style={styles.textInput}
-              placeholder='Password'
-              label="Password"
+              autoCorrect={false}
+              placeholder={'Password'}
               value={login.password}
-              onEndEditing={(text) => handlePassword(text)}
+              onChangeText={handlePassword}
             />
 
         </View>
@@ -93,7 +94,7 @@ export function LoginScreen({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("Home")}
+            onPress={() => navigation.navigate("Register")}
             style={styles.btnBG}>
             <Text style={styles.front}>Register</Text>
           </TouchableOpacity>
@@ -117,7 +118,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 35,
     marginTop: 80,
-    margin: 60,
     marginBottom: 80,
   },
   buttonArrondi: { 
