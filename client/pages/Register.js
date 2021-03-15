@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, Button, ScrollView, Dimensions, Alert } from "react-native";
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import IconFont from 'react-native-vector-icons/FontAwesome';
 
 import { Picker } from '@react-native-picker/picker';
 
@@ -18,6 +18,7 @@ export function RegisterScreen({ navigation }) {
         password: '',
         confpwd: '',
         gender: '',
+        security: true,
     });
 
 
@@ -62,7 +63,8 @@ export function RegisterScreen({ navigation }) {
             birthday: user.birthday,
             password: user.password,
             passwordConfirmation: user.confpwd,
-            gender: user.gender
+            gender: user.gender,
+            security: user.security
         })
     }
 
@@ -74,7 +76,8 @@ export function RegisterScreen({ navigation }) {
             birthday: user.birthday,
             password: user.password,
             passwordConfirmation: user.confpwd,
-            gender: user.gender
+            gender: user.gender,
+            security: user.security
         })
     }
 
@@ -86,7 +89,8 @@ export function RegisterScreen({ navigation }) {
             birthday: user.birthday,
             password: user.password,
             passwordConfirmation: user.confpwd,
-            gender: user.gender
+            gender: user.gender,
+            security: user.security
         })
     }
 
@@ -98,7 +102,8 @@ export function RegisterScreen({ navigation }) {
             birthday: text,
             password: user.password,
             passwordConfirmation: user.confpwd,
-            gender: user.gender
+            gender: user.gender,
+            security: user.security
         })
     }
 
@@ -110,7 +115,8 @@ export function RegisterScreen({ navigation }) {
             birthday: user.birthday,
             password: text,
             passwordConfirmation: user.confpwd,
-            gender: user.gender
+            gender: user.gender,
+            security: user.security
         })
     }
 
@@ -122,7 +128,8 @@ export function RegisterScreen({ navigation }) {
             birthday: user.birthday,
             password: user.password,
             confpwd: text,
-            gender: user.gender
+            gender: user.gender,
+            security: user.security
         })
     }
 
@@ -134,9 +141,36 @@ export function RegisterScreen({ navigation }) {
             birthday: user.birthday,
             password: user.password,
             passwordConfirmation: user.confpwd,
-            gender: text
+            gender: text,
+            security: user.security
         })
     }
+
+    function changeMode() {
+        if(user.security == true) {
+            setUser({ 
+                firstname: user.firstname, 
+                lastname: user.lastname,
+                email: user.email,
+                birthday: user.birthday,
+                password: user.password,
+                passwordConfirmation: user.confpwd,
+                gender: user.gender,
+                security: false
+            })
+        } else {
+            setUser({ 
+                firstname: user.firstname, 
+                lastname: user.lastname,
+                email: user.email,
+                birthday: user.birthday,
+                password: user.password,
+                passwordConfirmation: user.confpwd,
+                gender: user.gender,
+                security: true
+            })
+        }
+      }
 
     return (
         <ScrollView>
@@ -199,9 +233,15 @@ export function RegisterScreen({ navigation }) {
                     placeholder='Password'
                     value={user.password}
                     onChangeText={handlePwd}
-                    secureTextEntry={true}
+                    secureTextEntry={user.security}
+                />
+                <TouchableOpacity>
+                    <IconFont 
+                        onPress={changeMode}
+                        name="user"
+                        type="MaterialIcons"
                     />
-
+                </TouchableOpacity>
             </View>
 
             <View style={styles.buttonArrondi}>
@@ -210,8 +250,15 @@ export function RegisterScreen({ navigation }) {
                     placeholder='Confirm Password'
                     value={user.confpwd}
                     onChangeText={handleConfPwd}
-                    secureTextEntry={true}
+                    secureTextEntry={user.security}
+                />
+                <TouchableOpacity>
+                    <IconFont 
+                        onPress={changeMode}
+                        name="user"
+                        type="MaterialIcons"
                     />
+                </TouchableOpacity>
             </View>
 
             <View style={styles.register}>

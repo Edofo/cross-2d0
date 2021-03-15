@@ -2,6 +2,8 @@ import 'react-native-gesture-handler';
 import React, { useState } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import IconFont from 'react-native-vector-icons/FontAwesome';
+
 
 const { width: WIDTH } = Dimensions.get('window')
 
@@ -10,6 +12,7 @@ export function LoginScreen({ navigation }) {
   const [login, setLogin] = useState({
     email: '',
     password: '',
+    security: true,
   })
 
   function submit() {
@@ -47,10 +50,18 @@ export function LoginScreen({ navigation }) {
 
 
   function handleEmail(text) {
-    setLogin({ email: text, password: login.password})
+    setLogin({ email: text, password: login.password, security: login.security})
   }
   function handlePassword(text) {
-    setLogin({ email: login.email, password: text })
+    setLogin({ email: login.email, password: text, security: login.security})
+  }
+
+  function changeMode() {
+    if(login.security == true) {
+      setLogin({ email: login.email, password: login.password, security: false})
+    } else {
+      setLogin({ email: login.email, password: login.password, security: true})
+    }
   }
 
   return (
@@ -81,8 +92,16 @@ export function LoginScreen({ navigation }) {
               placeholder={'Password'}
               value={login.password}
               onChangeText={handlePassword}
-              secureTextEntry={true}
+              secureTextEntry={login.security}
             />
+
+            <TouchableOpacity>
+              <IconFont 
+                onPress={changeMode}
+                name="user"
+                type="MaterialIcons"
+              />
+            </TouchableOpacity>
 
         </View>
 
