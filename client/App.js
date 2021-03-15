@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { HomeScreen } from './pages/Home';
+import { ProfilScreen } from './pages/Profil';
 import { TaskScreen } from './pages/TaskScreen';
 import { LoginScreen } from './pages/Login';
 import { RegisterScreen } from './pages/Register';
@@ -35,11 +35,11 @@ export default function App() {
       > 
       {
         Logged ?
-          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="Home" component={ProfilScreen} />
         :
           <Stack.Screen name="Login" component={LoginScreen} />
       }
-        <Stack.Screen name="Home2" component={HomeScreen} />
+        <Stack.Screen name="Home2" component={ProfilScreen} />
         <Stack.Screen name="Login2" component={LoginScreen} />
         <Stack.Screen name="Task" component={TaskScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />

@@ -81,6 +81,7 @@ export function LoginScreen({ navigation }) {
               placeholder={'Password'}
               value={login.password}
               onChangeText={handlePassword}
+              secureTextEntry={true}
             />
 
         </View>

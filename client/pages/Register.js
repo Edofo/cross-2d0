@@ -199,6 +199,7 @@ export function RegisterScreen({ navigation }) {
                     placeholder='Password'
                     value={user.password}
                     onChangeText={handlePwd}
+                    secureTextEntry={true}
                     />
 
             </View>
@@ -209,6 +210,7 @@ export function RegisterScreen({ navigation }) {
                     placeholder='Confirm Password'
                     value={user.confpwd}
                     onChangeText={handleConfPwd}
+                    secureTextEntry={true}
                     />
             </View>
 
