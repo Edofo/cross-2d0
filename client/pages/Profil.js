@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import React, { useState, useEffect } from 'react';
 import { IconButton, Colors } from 'react-native-paper';
@@ -43,43 +43,52 @@ export function ProfilScreen({ navigation }) {
       }
     },[])
 
-return (
-<View style={styles.container}>
-    <View style={styles.container2}>
+  return (
+    <View style={styles.container}>
+      <View style={styles.container2}>
         <Text style={styles.toDoListTitle}>Profil</Text>
         <IconButton style={styles.icon}
-        icon="arrow-left"   
-        color={Colors.red500}
-        size={20}
-        onPress={() => navigation.navigate('Home')}
+          icon="arrow-left"   
+          color={Colors.red500}
+          size={20}
+          onPress={() => navigation.navigate('Home')}
         />
     </View>
-  <Text style={styles.front}>Firstname : </Text>
-  <View style={styles.rect}>
-        <Icon name="edit" style={styles.Icon}></Icon>
-        <Text style={styles.billy}>{user.firstname}</Text>
-      </View>
-  <Text style={styles.front}>Lastname :</Text>
-  <View style={styles.rect}>
-        <Icon name="edit" style={styles.Icon}></Icon>
-        <Text style={styles.billy}>{user.lastname}</Text>
-      </View>
-  <Text style={styles.front}>Birthday :</Text>
-  <View style={styles.rect}>
-        <Icon name="edit" style={styles.Icon}></Icon>
-        <Text style={styles.billy}>{user.birthdate}</Text>
-      </View>
-  <Text style={styles.front}>Gender :</Text>
-  <View style={styles.rect}>
-        <Icon name="edit" style={styles.Icon}></Icon>
-        <Text style={styles.billy}>{user.gender}</Text>
-      </View>
-  <Text style={styles.front}>Password :</Text>
-  <View style={styles.rect}>
-        <Icon name="edit" style={styles.Icon}></Icon>
-        <Text style={styles.billy}>{user.password}</Text>
-      </View>
-  </View>)};
+    
+    <Text style={styles.front}>Firstname : </Text>
+    <View style={styles.rect}>
+          <Icon name="edit" style={styles.Icon}></Icon>
+          <Text style={styles.billy}>{user.firstname}</Text>
+        </View>
+    <Text style={styles.front}>Lastname :</Text>
+    <View style={styles.rect}>
+          <Icon name="edit" style={styles.Icon}></Icon>
+          <Text style={styles.billy}>{user.lastname}</Text>
+        </View>
+    <Text style={styles.front}>Birthday :</Text>
+    <View style={styles.rect}>
+          <Icon name="edit" style={styles.Icon}></Icon>
+          <Text style={styles.billy}>{user.birthdate}</Text>
+        </View>
+    <Text style={styles.front}>Gender :</Text>
+    <View style={styles.rect}>
+          <Icon name="edit" style={styles.Icon}></Icon>
+          <Text style={styles.billy}>{user.gender}</Text>
+        </View>
+    <Text style={styles.front}>Password :</Text>
+    <View style={styles.rect}>
+          <Icon name="edit" style={styles.Icon}></Icon>
+          <Text style={styles.billy}>{user.password}</Text>
+        </View>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Task")}
+          style={styles.btnBG}>
+        <Text style={styles.front}>Task</Text>
+        </TouchableOpacity>
+    </View>
+  )
+};
 
 const styles = StyleSheet.create({
   container: {

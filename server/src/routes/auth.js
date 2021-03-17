@@ -4,13 +4,15 @@ import { isEmpty } from 'lodash'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import passport from 'passport'
+import randomstring from 'randomstring'
+import sendMail from '../services/sendMail'
 import { hashPassword } from '../utils/password'
 
 const api = Router()
 
 api.post('/signup', async (req, res) => {
 
-  const acceptedFields = ['firstname', 'lastname', 'email', 'password', 'passwordConfirmation', 'birthdate']
+  const acceptedFields = ['firstname', 'lastname', 'email', 'password', 'passwordConfirmation', 'birthdate', 'gender']
 
   const missingValues = acceptedFields.filter(field => !req.body[field])
   if (!isEmpty(missingValues)) {
@@ -19,7 +21,7 @@ api.post('/signup', async (req, res) => {
     })
   }
 
-  const { firstname, lastname, email, password, passwordConfirmation } = req.body
+  const { firstname, lastname, email, password, passwordConfirmation, gender } = req.body
   const birthdate = new Date(req.body.birthdate);
 
   if (password !== passwordConfirmation) {
@@ -36,6 +38,7 @@ api.post('/signup', async (req, res) => {
         lastname,
         email,
         birthdate,
+        gender,
         encryptedPassword: hashPassword(password),
       }
     })
@@ -65,6 +68,32 @@ api.post('/signin', (req, res) => {
   })
 
   login(req, res)
+})
+
+
+api.post('/forgot-password', async (req, res) => {
+  const { email } = req.body
+
+  const prisma = new PrismaClient()
+  const user = await prisma.user.findFirst({ where: { email } })
+
+  if (!user) {
+    return res.status(400).json({ error: `User with email ${email} doesn't exist` })
+  }
+
+  const newPassword = randomstring.generate(7)
+
+  await prisma.user.update({
+    where: {
+      id: user.id
+    },
+    data: {
+      encryptedPassword: hashPassword(newPassword)
+    }
+  })
+
+  await sendMail({ to: email, subject: 'Forgot password', text: `Your new password is ${newPassword}`, html: `<strong>Your new password is ${newPassword}` })
+  res.json({ data: { message: 'Email successfully sent' } })
 })
 
 export default api

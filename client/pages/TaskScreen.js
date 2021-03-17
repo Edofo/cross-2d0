@@ -8,6 +8,7 @@ import jwt_decode from "jwt-decode";
 const { width: WIDTH } = Dimensions.get('window')
 
 export const TaskScreen = ({ navigation }) => {
+    
     const [user, setUser] = useState([])
     const [tasks, setTask] = useState([]);
 
@@ -20,14 +21,13 @@ export const TaskScreen = ({ navigation }) => {
 
             fetch(`http://localhost:4242/api/task/${decryptToken.id}`)
                 .then(response => response.json())
-                .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
+                .then(data => { data.data ? setTask(data.data.task) : setTask(['You don\'t have task'])});
         })
       } catch(e) {
         console.log(e)
       }
     },[])
 
-    // GET ALL TASK OF USER
     
     if (!tasks) {
         return <Text>LOADING</Text>
