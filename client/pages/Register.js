@@ -134,6 +134,7 @@ export function RegisterScreen({ navigation }) {
     }
 
     function handleGender(text) {
+        setUser({ ...user, email: '' })
         setUser({ 
             firstname: user.firstname, 
             lastname: user.lastname,

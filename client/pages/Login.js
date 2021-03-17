@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, ScrollView, Dimensions, Alert } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Dimensions, Alert, ImageBackground } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomTitle from '../components/CustomTitle';
@@ -100,58 +100,64 @@ export function LoginScreen({ navigation }) {
   
   return (
 
-    <ScrollView>
+    <ImageBackground
+      source={require('../assets/fond.jpg')}
+      style={{ resizeMode: "cover", flex:1, height: '100%', width: '100%'}}>
 
-      <View style={styles.container}>
+      <ScrollView>
 
-        <Text style={styles.toDoListTitle}>Login</Text>
-        <View>
-          <CustomTitle
-            id={1}
-            text={'Login'}
-          />
+        <View style={styles.container}>
+
+          <Text style={styles.toDoListTitle}>Login</Text>
+          <View>
+            <CustomTitle
+              id={1}
+              text={'Login'}
+            />
+          </View>
+
+          <View style={styles.separator}></View>
+
+          <View style={styles.separator}></View>
+
+          <View>
+          { customInput.map((input, index) => (
+            <CustomInput
+              id={input.index}
+              placeholder={input.placeholder}
+              valeur={input.valeur}
+              text={input.changeText}
+              secure={input.secureTextEntry}
+              pwd={input.pwd}
+              changeVisibility={input.changeVisibility}
+            />
+          ))}
+          </View>
+
+          <View>
+          { customButton.map((button, index) => (
+            <CustomButton
+              key={button.index}
+              actionsbtn={button.actionsbtn}
+              title={button.title}
+            />
+          ))}
+          </View>
+
+          <View style={styles.separator}></View>
+
+          <View>
+            <Text
+              style={styles.text2}
+              onPress={() => navigation.navigate("ForgotPassword")}
+            >
+              Forgot Password ?
+            </Text>
+          </View>
+
         </View>
-        
-        <View style={styles.separator}></View>
-
-        <View style={styles.separator}></View>
-
-        <View>
-        { customInput.map((input, index) => (
-          <CustomInput
-            id={input.index}
-            placeholder={input.placeholder}
-            valeur={input.valeur}
-            text={input.changeText}
-            secure={input.secureTextEntry}
-            pwd={input.pwd}
-            changeVisibility={input.changeVisibility}
-          />
-        ))}
-        </View>
-
-        <View>
-        { customButton.map((button, index) => (
-          <CustomButton
-            key={button.index}
-            actionsbtn={button.actionsbtn}
-            title={button.title}
-          />
-        ))}
-        </View>
-
-        <View style={styles.separator}></View>
-
-        <View>
-          <Text
-            onPress={() => navigation.navigate("ForgotPassword")}
-          >
-            Forgot Password ?
-          </Text>
-        </View>
-
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   )
 }
 
@@ -165,5 +171,8 @@ const styles = StyleSheet.create({
   },
   separator:{
     paddingTop: 40
+  },
+  text2: {
+    color: '#efedec',
   }
 });
