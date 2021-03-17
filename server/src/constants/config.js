@@ -5,5 +5,7 @@ export default [
   'JWT_ENCRYPTION',
   'MAILER_HOST',
   'MAILER_PORT',
-  'MAILER_FROM'
+  'MAILER_FROM',
+  'MAILER_USER',
+  'MAILER_PASSWORD'
 ]

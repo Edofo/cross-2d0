@@ -17,7 +17,7 @@ export function ProfilScreen({ navigation }) {
         .then((token) => { 
           const decryptToken = jwt_decode(token);
 
-          fetch(`http://localhost:4242/api/users/${decryptToken.id}`, {
+          fetch(`http://10.3.2.188:4242/api/users/${decryptToken.id}`, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',

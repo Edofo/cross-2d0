@@ -8,6 +8,8 @@ import { ProfilScreen } from './pages/Profil';
 import { TaskScreen } from './pages/TaskScreen';
 import { LoginScreen } from './pages/Login';
 import { RegisterScreen } from './pages/Register';
+import { ForgotPasswordScreen } from './pages/ForgotPassword';
+
 
 
 const Stack = createStackNavigator();
@@ -43,6 +45,7 @@ export default function App() {
         <Stack.Screen name="Login2" component={LoginScreen} />
         <Stack.Screen name="Task" component={TaskScreen} />
         <Stack.Screen name="Register" component={RegisterScreen} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

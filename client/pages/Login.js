@@ -1,8 +1,11 @@
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert } from "react-native";
+import { StyleSheet, View, Text, ScrollView, Dimensions, Alert } from "react-native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import IconFont from 'react-native-vector-icons/FontAwesome';
+
+import CustomTitle from '../components/CustomTitle';
+import CustomButton from '../components/CustomButton';
+import CustomInput from '../components/CustomInput'
 
 
 const { width: WIDTH } = Dimensions.get('window')
@@ -15,9 +18,39 @@ export function LoginScreen({ navigation }) {
     security: true,
   })
 
+  
+  const customButton = [
+    {
+        actionsbtn: () => submit(),
+        title: 'Login'
+    }, 
+    {
+        actionsbtn: () => navigation.navigate("Register"),
+        title: 'Register'
+    }
+  ]
+
+  const customInput = [
+    {
+        placeholder: 'Email',
+        valeur: login.email,
+        changeText: handleEmail,
+        secureTextEntry: false,
+        pwd: false
+    }, 
+    {
+        placeholder: 'Password',
+        value: login.password,
+        changeText: handlePassword,
+        secureTextEntry: login.security,
+        pwd: true,
+        changeVisibility: changeMode
+    }
+  ]
+
   function submit() {
 
-    fetch(`http://localhost:4242/api/auth/signin`, {
+    fetch(`http://10.3.2.188:4242/api/auth/signin`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -30,7 +63,7 @@ export function LoginScreen({ navigation }) {
         })
         .then((response) => response.json())
         .then((responseData) => {
-          console.log(login)
+
           console.log(responseData)
           if (!responseData.data.user == false) {
             try {
@@ -57,13 +90,14 @@ export function LoginScreen({ navigation }) {
   }
 
   function changeMode() {
-    if(login.security == true) {
-      setLogin({ email: login.email, password: login.password, security: false})
-    } else {
+    login.security ? 
+      setLogin({ email: login.email, password: login.password, security: false}) 
+    : 
       setLogin({ email: login.email, password: login.password, security: true})
-    }
   }
 
+
+  
   return (
 
     <ScrollView>
@@ -71,54 +105,49 @@ export function LoginScreen({ navigation }) {
       <View style={styles.container}>
 
         <Text style={styles.toDoListTitle}>Login</Text>
+        <View>
+          <CustomTitle
+            id={1}
+            text={'Login'}
+          />
+        </View>
+        
+        <View style={styles.separator}></View>
 
-        <View style={styles.buttonArrondi}>
+        <View style={styles.separator}></View>
 
-          <TextInput
-              style={styles.textInput}
-              autoCorrect={false}
-              placeholder={'Email'}
-              value={login.email}
-              onChangeText={handleEmail}
-            />
-
+        <View>
+        { customInput.map((input, index) => (
+          <CustomInput
+            id={input.index}
+            placeholder={input.placeholder}
+            valeur={input.valeur}
+            text={input.changeText}
+            secure={input.secureTextEntry}
+            pwd={input.pwd}
+            changeVisibility={input.changeVisibility}
+          />
+        ))}
         </View>
 
-        <View style={styles.buttonArrondi}>
-
-          <TextInput
-              style={styles.textInput}
-              autoCorrect={false}
-              placeholder={'Password'}
-              value={login.password}
-              onChangeText={handlePassword}
-              secureTextEntry={login.security}
-            />
-
-            <TouchableOpacity>
-              <IconFont 
-                onPress={changeMode}
-                name="user"
-                type="MaterialIcons"
-              />
-            </TouchableOpacity>
-
+        <View>
+        { customButton.map((button, index) => (
+          <CustomButton
+            key={button.index}
+            actionsbtn={button.actionsbtn}
+            title={button.title}
+          />
+        ))}
         </View>
 
-        <View style={styles.button}>
+        <View style={styles.separator}></View>
 
-          <TouchableOpacity
-            onPress={() => submit()}
-            style={styles.btnBG}>
-            <Text style={styles.front}>Login</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Register")}
-            style={styles.btnBG}>
-            <Text style={styles.front}>Register</Text>
-          </TouchableOpacity>
-
+        <View>
+          <Text
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
+            Forgot Password ?
+          </Text>
         </View>
 
       </View>
@@ -131,40 +160,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-
+    justifyContent: 'center',
+    alignContent: 'center'
   },
-  toDoListTitle: {
-    color: 'gray',
-    fontWeight: 'bold',
-    fontSize: 35,
-    marginTop: 80,
-    marginBottom: 80,
-  },
-  buttonArrondi: { 
-    backgroundColor: "lightgray",
-    borderRadius: 21,
-    width: WIDTH - 55,
-    height: 55,
-    margin: 15,
-  },
-  textInput: {
-    height: 55, 
-    paddingLeft: 10
-  },
-  button: {
-    marginTop: 30,
-  },
-  btnBG: {
-    backgroundColor: "#636466",
-    width: 138,
-    height: 60,
-    margin: 10,
-  },
-  front:{
-    marginTop: 'auto',
-    alignSelf:'center',
-    color: 'yellow',
-    height: 45,
-    fontSize: 20,
+  separator:{
+    paddingTop: 40
   }
 });

@@ -24,7 +24,7 @@ export function RegisterScreen({ navigation }) {
 
     function submit() {
 
-        fetch(`http://localhost:4242/api/auth/signup`, {
+        fetch(`http://10.3.2.188:4242/api/auth/signup`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -62,7 +62,7 @@ export function RegisterScreen({ navigation }) {
             email: user.email,
             birthday: user.birthday,
             password: user.password,
-            passwordConfirmation: user.confpwd,
+            confpwd: user.confpwd,
             gender: user.gender,
             security: user.security
         })
@@ -75,7 +75,7 @@ export function RegisterScreen({ navigation }) {
             email: user.email,
             birthday: user.birthday,
             password: user.password,
-            passwordConfirmation: user.confpwd,
+            confpwd: user.confpwd,
             gender: user.gender,
             security: user.security
         })
@@ -88,7 +88,7 @@ export function RegisterScreen({ navigation }) {
             email: text,
             birthday: user.birthday,
             password: user.password,
-            passwordConfirmation: user.confpwd,
+            confpwd: user.confpwd,
             gender: user.gender,
             security: user.security
         })
@@ -101,7 +101,7 @@ export function RegisterScreen({ navigation }) {
             email: user.email,
             birthday: text,
             password: user.password,
-            passwordConfirmation: user.confpwd,
+            confpwd: user.confpwd,
             gender: user.gender,
             security: user.security
         })
@@ -114,7 +114,7 @@ export function RegisterScreen({ navigation }) {
             email: user.email,
             birthday: user.birthday,
             password: text,
-            passwordConfirmation: user.confpwd,
+            confpwd: user.confpwd,
             gender: user.gender,
             security: user.security
         })
@@ -140,7 +140,7 @@ export function RegisterScreen({ navigation }) {
             email: user.email,
             birthday: user.birthday,
             password: user.password,
-            passwordConfirmation: user.confpwd,
+            confpwd: user.confpwd,
             gender: text,
             security: user.security
         })
@@ -154,7 +154,7 @@ export function RegisterScreen({ navigation }) {
                 email: user.email,
                 birthday: user.birthday,
                 password: user.password,
-                passwordConfirmation: user.confpwd,
+                confpwd: user.confpwd,
                 gender: user.gender,
                 security: false
             })
@@ -165,7 +165,7 @@ export function RegisterScreen({ navigation }) {
                 email: user.email,
                 birthday: user.birthday,
                 password: user.password,
-                passwordConfirmation: user.confpwd,
+                confpwd: user.confpwd,
                 gender: user.gender,
                 security: true
             })

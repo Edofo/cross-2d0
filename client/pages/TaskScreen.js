@@ -19,7 +19,7 @@ export const TaskScreen = ({ navigation }) => {
           const decryptToken = jwt_decode(token);
           setUser(decryptToken)
 
-            fetch(`http://localhost:4242/api/task/${decryptToken.id}`)
+            fetch(`http://10.3.2.188:4242/api/task/${decryptToken.id}`)
                 .then(response => response.json())
                 .then(data => { data.data ? setTask(data.data.task) : setTask(['You don\'t have task'])});
         })
@@ -41,7 +41,7 @@ export const TaskScreen = ({ navigation }) => {
 
     function submit() {
 
-        fetch(`http://localhost:4242/api/task/add/${user.id}`, {
+        fetch(`http://10.3.2.188:4242/api/task/add/${user.id}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -55,7 +55,7 @@ export const TaskScreen = ({ navigation }) => {
             .then((response) => response.json())
             .then((responseData) => {
             Alert.alert('Your task has been added to the to do list')
-            fetch(`http://localhost:4242/api/task/${user.id}`)
+            fetch(`http://10.3.2.188:4242/api/task/${user.id}`)
                 .then(response => response.json())
                 .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
         })
@@ -69,7 +69,7 @@ export const TaskScreen = ({ navigation }) => {
 
     function editTask(id) {
 
-        fetch(`http://localhost:4242/api/task/edit/${id}`, {
+        fetch(`http://10.3.2.188:4242/api/task/edit/${id}`, {
             method: 'PATCH',
             headers: {
                 'Accept': 'application/json',
@@ -78,7 +78,7 @@ export const TaskScreen = ({ navigation }) => {
             })
             .then((response) => response.json())
             .then((responseData) => {  
-            fetch(`http://localhost:4242/api/task/${user.id}`)
+            fetch(`http://10.3.2.188:4242/api/task/${user.id}`)
                 .then(response => response.json())
                 .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
         })
@@ -92,7 +92,7 @@ export const TaskScreen = ({ navigation }) => {
 
     function deleteTask(id) {
 
-        fetch(`http://localhost:4242/api/task/delete/${id}`, {
+        fetch(`http://10.3.2.188:4242/api/task/delete/${id}`, {
             method: 'DELETE',
             headers: {
                 'Accept': 'application/json',
@@ -101,7 +101,7 @@ export const TaskScreen = ({ navigation }) => {
             })
             .then((response) => response.json())
             .then((responseData) => {  
-            fetch(`http://localhost:4242/api/task/${user.id}`)
+            fetch(`http://10.3.2.188:4242/api/task/${user.id}`)
                 .then(response => response.json())
                 .then(data => data.data ? setTask(data.data.task) : setTask(['You don\'t have task']));
         })
