@@ -63,8 +63,6 @@ export function LoginScreen({ navigation }) {
         })
         .then((response) => response.json())
         .then((responseData) => {
-
-          console.log(responseData)
           if (!responseData.data.user == false) {
             try {
               AsyncStorage.setItem('token', responseData.data.token)

@@ -123,13 +123,13 @@ export const TaskScreen = ({ navigation }) => {
                 <View style={styles.container}>
                     <View>
                         <TouchableOpacity
-                            onPress={() => navigation.navigate('Home')}
+                            onPress={() => navigation.navigate('Home2')}
                         >
-                        <Icon 
-                            style={styles.profil}
-                            name="user"
-                            type="MaterialIcons"
-                        />
+                            <Icon 
+                                style={styles.profil}
+                                name="user"
+                                type="MaterialIcons"
+                            />
                         </TouchableOpacity>
                     </View>
 

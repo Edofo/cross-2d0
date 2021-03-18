@@ -1,15 +1,26 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { StyleSheet, View, Text, ImageBackground, ScrollView, Alert } from "react-native";
 import React, { useState, useEffect } from 'react';
 import { IconButton, Colors } from 'react-native-paper';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwt_decode from "jwt-decode";
 
+import CustomButton from '../components/CustomButton';
 
 export function ProfilScreen({ navigation }) {
 
-    const [user, setUser] = useState("")
+  const customButton = [
+    {
+        actionsbtn: () => EditProfil(),
+        title: 'Edit my Profil'
+    }, 
+    {
+      actionsbtn: () => navigation.navigate('Task'),
+      title: 'My tasks'
+    }
+  ]
+
+  const [user, setUser] = useState("")
 
     useEffect(() => {
       try {
@@ -28,9 +39,7 @@ export function ProfilScreen({ navigation }) {
 
             .then((response) => response.json())
             .then((responseData) => {
-            console.log(responseData.data.user)
             setUser(responseData.data.user)
-            console.log(user)
           })
 
           .catch((error) =>{
@@ -43,101 +52,167 @@ export function ProfilScreen({ navigation }) {
       }
     },[])
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.container2}>
-        <Text style={styles.toDoListTitle}>Profil</Text>
-        <IconButton style={styles.icon}
-          icon="arrow-left"   
-          color={Colors.red500}
-          size={20}
-          onPress={() => navigation.navigate('Home')}
-        />
-    </View>
-    
-    <Text style={styles.front}>Firstname : </Text>
-    <View style={styles.rect}>
-          <Icon name="edit" style={styles.Icon}></Icon>
-          <Text style={styles.billy}>{user.firstname}</Text>
-        </View>
-    <Text style={styles.front}>Lastname :</Text>
-    <View style={styles.rect}>
-          <Icon name="edit" style={styles.Icon}></Icon>
-          <Text style={styles.billy}>{user.lastname}</Text>
-        </View>
-    <Text style={styles.front}>Birthday :</Text>
-    <View style={styles.rect}>
-          <Icon name="edit" style={styles.Icon}></Icon>
-          <Text style={styles.billy}>{user.birthdate}</Text>
-        </View>
-    <Text style={styles.front}>Gender :</Text>
-    <View style={styles.rect}>
-          <Icon name="edit" style={styles.Icon}></Icon>
-          <Text style={styles.billy}>{user.gender}</Text>
-        </View>
-    <Text style={styles.front}>Password :</Text>
-    <View style={styles.rect}>
-          <Icon name="edit" style={styles.Icon}></Icon>
-          <Text style={styles.billy}>{user.password}</Text>
-        </View>
+    function logout() {
+      Alert.alert('You have been disconnected')
+      try {
+        AsyncStorage.removeItem('token')
+        navigation.navigate('Login2')
+      } catch (e) {
+        console.log(e)
+      }
+    }
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Task")}
-          style={styles.btnBG}>
-        <Text style={styles.front}>Task</Text>
-        </TouchableOpacity>
-    </View>
+  return (
+    <ImageBackground
+      source={require('../assets/fond.jpg')}
+      style={{ resizeMode: "cover", flex:1, height: '100%', width: '100%'}}>
+
+      <ScrollView>
+        <View style={styles.encadrement}>
+          <View>
+            <View style={styles.container}>
+              <View style={styles.container2}>
+    
+                <Text style={styles.toDoListTitle}>Profil</Text>
+                <IconButton style={styles.icon}
+                  icon="logout"   
+                  color={Colors.black}
+                  size={25}
+                  onPress={() => logout()}
+                />
+              </View>
+          </View>
+
+          <View style={styles.container}>
+            <Text style={styles.front}>Firstname</Text>
+            <Text style={styles.frontInfo}>{user.firstname}</Text>
+            <View style={styles.ligne}></View>
+          </View>
+
+            <View style={styles.container}>
+              <Text style={styles.front}>Lastname</Text>
+              <Text style={styles.frontInfo}>{user.lastname}</Text>
+              <View style={styles.ligne}></View>
+            </View>
+
+            <View style={styles.container}>
+              <Text style={styles.front}>BirthDay</Text>
+              <Text style={styles.frontInfo}>{user.birthdate}</Text>
+              <View style={styles.ligne}></View>
+            </View>
+
+            <View style={styles.container}>
+              <Text style={styles.front}>Gender</Text>
+              <Text style={styles.frontInfo}>{user.gender}</Text>
+              <View style={styles.ligne}></View>
+            </View>
+
+            <View style={styles.separator}></View>
+            
+            <View style={styles.container}>
+                { customButton.map((button, index) => (
+                    <CustomButton
+                        key={index}
+                        id={index}
+                        actionsbtn={button.actionsbtn}
+                        title={button.title}
+                    />
+                ))}          
+            </View>
+
+          <View style={styles.separator}></View>
+
+          </View>
+        </View>
+      </ScrollView>
+
+    </ImageBackground>
   )
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    textAlignVertical:'center',
+    justifyContent: 'center',
+    alignItems:'center',
   },
-  container2: {
-    flex: 1,
-    flexDirection:'row-reverse',
-    alignItems: 'center',
-    marginRight: 'auto',
-    alignContent: 'space-between'
+  bkgc:{
+    backgroundColor:'black',
+    width: '100%',
+    height: '100%',
+    opacity:0.5
   },
-  btnBG: {
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "#000000",
-    width: 138,
-    height: 60,
-    alignSelf:'center',
-    marginTop: 25
-
-  },
-  toDoListTitle: {
-    color: 'grey',
-    height: 50,
-    fontSize: 20,
-    marginTop: 25,
-
-    },
   front:{
-    marginTop: 20,
-    color: 'grey',
+    color: 'red',
+    marginBottom: -20,
+    height: 50,
+    fontSize: 23,
+    marginTop: '3%',
+  },
+  frontInfo:{
+    color: '#2c3e50',
+    marginBottom: -20,
     height: 50,
     fontSize: 20,
+    marginTop: '3%',
   },
   rect: {
-    width: 304,
+    width: 300,
     height: 55,
-    backgroundColor: "rgba(255,255,255,1)",
-    borderWidth: 1,
+    backgroundColor: "#ded6d4",
+    borderWidth: 1.5,
     borderColor: "#000000",
-    marginLeft: 15,
+    opacity: 0.8,
+    borderRadius: 45,
   },
-  Icon: {
-    fontSize: 15,
-    marginLeft: 'auto'
+  toDoListTitle: {
+    color: '#2c3e50',
+    height: 50,
+    fontSize: 20,
+    marginTop: 50,
+    fontSize: 30,
+    marginRight:'40%',
+    marginLeft:'25%'
+  },
+  btnstyle: {
+    width: 200,
+    height: 55,
+    backgroundColor: "#e74c3c",
+    borderWidth: 1.75,
+    borderColor: "#000000",
+    opacity: 0.8,
+    borderRadius: 15,
+    marginTop: 10
+  },
+  btntxt: {
+    color: "#bdc3c7",
+    alignSelf: 'center',
+    marginTop: '4%',
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  encadrement:{
+    backgroundColor:'white',
+    margin: '10%',
+    borderRadius: 20,
+    borderWidth: 1,  
+  },
+  container2:{
+    flexDirection:'row-reverse',
   },
   icon: {
-      backgroundColor: 'green',
-      marginRight: 150
+    flex:1,
+    alignSelf:'center',
+  },
+  ligne: {
+    borderBottomColor: 'black',
+    borderBottomWidth: 2,
+    width: '65%',
+    marginTop:'5%',
+    opacity: 0.76
+  },
+  separator:{
+    paddingTop: 40
   }
 });

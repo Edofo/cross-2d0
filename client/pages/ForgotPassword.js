@@ -1,8 +1,10 @@
 import 'react-native-gesture-handler';
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert } from "react-native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import IconFont from 'react-native-vector-icons/FontAwesome';
+import { StyleSheet, View, ScrollView, Dimensions, Alert, ImageBackground, Text } from "react-native";
+
+import CustomTitle from '../components/CustomTitle';
+import CustomButton from '../components/CustomButton';
+import CustomInput from '../components/CustomInput'
 
 
 const { width: WIDTH } = Dimensions.get('window')
@@ -27,7 +29,6 @@ export function ForgotPasswordScreen({ navigation }) {
         })
         .then((response) => response.json())
         .then((responseData) => {
-            console.log(responseData)
             if (!responseData.error) {
                 Alert.alert('Check your email adress !')
                 navigation.navigate("Login")
@@ -47,43 +48,79 @@ export function ForgotPasswordScreen({ navigation }) {
 
   return (
 
-    <ScrollView>
+    <ImageBackground
+      source={require('../assets/fond.jpg')}
+      style={{ resizeMode: "cover", flex:1, height: '100%', width: '100%'}}>
 
-      <View style={styles.container}>
+      <ScrollView>
 
-        <View style={styles.buttonArrondi}>
+        <View style={styles.container}>
 
-            <TextInput
-                style={styles.textInput}
-                autoCorrect={false}
+          <View>
+            <CustomTitle
+              key={1}
+              id={1}
+              text={'Forgot Password ?'}
+            />
+          </View>
+
+          <View>
+            <Text style={styles.text}>
+              An email will be sent to you with a randomly generated password so you can log into your account.
+            </Text>
+          </View>
+
+          <View>
+              <CustomInput
+                key={1}
+                id={1}
                 placeholder={'Email'}
-                value={email.email}
-                onChangeText={handleEmail}
+                valeur={email}
+                changeText={handleEmail}
+                secureTextEntry={false}
+                pwd={false}
+              />
+          </View>
+                
+          <View>
+
+            <CustomButton
+              key={1}
+              id={1}
+              actionsbtn={() => submit()}
+              title={'Send'}
             />
 
-        </View>
-             
-        <View style={styles.button}>
+          </View>
 
-            <TouchableOpacity
-                onPress={() => submit()}
-                style={styles.btnBG}>
-                <Text style={styles.front}>SEND</Text>
-            </TouchableOpacity>
-
+          <View>
+            <Text
+              style={styles.text}
+              onPress={() => navigation.navigate("Login")}
+            >
+              Back to login
+            </Text>
+          </View>
+      
         </View>
-    
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   )
 }
 
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 70,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: WIDTH - 55,
+  },
+  text: {
+    width: WIDTH - 100,
+    textAlign: 'center',
+    paddingTop: 20,
+    paddingBottom: 20,
+    color: '#efedec'
   }
 });

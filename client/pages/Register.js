@@ -31,9 +31,9 @@ export function RegisterScreen({ navigation }) {
             actionsbtn: () => submit(),
             title: 'Register'
         }, 
-      ]
+    ]
     
-      const customInput = [
+    const customInput = [
         {
             placeholder: 'Firstname',
             valeur: user.firstname,
@@ -105,7 +105,6 @@ export function RegisterScreen({ navigation }) {
             .then((response) => response.json())
             .then((responseData) => {
                 if(responseData.error !== "id is not defined") {
-                    console.log(responseData)
                     Alert.alert(responseData.error)
                 } else {
                     navigation.navigate('Login2')
