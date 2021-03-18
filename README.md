@@ -52,4 +52,4 @@ Give a ⭐️ if this project helped you!
 Copyright © 2021 [@Edofo](https://github.com/Edofo) [@Matthlo](https://github.com/Matthlo).<br />
 
 *** 
-Craft with ❤️ by Edofo / Mâ_L / PonchHKT
+Craft with ❤️ by Edofo / Matthlo
