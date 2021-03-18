@@ -161,7 +161,6 @@ export function RegisterScreen({ navigation }) {
                             key={1}
                             id={1}
                             text={'Register'}
-                            style={styles.title2}
                         />
                         <IconButton style={styles.icon}
                             icon="arrow-left"   

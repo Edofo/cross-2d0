@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, Button, TextInput, Alert, Dimensions, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Button, TextInput, Alert, Dimensions, StyleSheet, ScrollView, TouchableOpacity, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import jwt_decode from "jwt-decode";
+
+import CustomTitle from '../components/CustomTitle';
+import CustomButton from '../components/CustomButton';
+
 
 const { width: WIDTH } = Dimensions.get('window')
 
@@ -111,24 +115,37 @@ export const TaskScreen = ({ navigation }) => {
     };  
 
     return (
-        <ScrollView style={styles.container}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
-            >
-              <Icon 
-                style={styles.profil}
-                name="user"
-                type="MaterialIcons"
-              />
-            </TouchableOpacity>
+        <ImageBackground
+            source={require('../assets/fond.jpg')}
+            style={{ resizeMode: "cover", flex:1, height: '100%', width: '100%'}}>
 
-            <Text style={styles.title}>My list</Text>
-            <View>
+            <ScrollView>
+                <View style={styles.container}>
+                    <View>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Home')}
+                        >
+                        <Icon 
+                            style={styles.profil}
+                            name="user"
+                            type="MaterialIcons"
+                        />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View>
+                        <CustomTitle
+                            key={1}
+                            id={1}
+                            text={'My List'}
+                        />
+                    </View>
+                <View>
 
 
 
-              {tasks.map((task) => (
-                <View key={task.id}>
+              {tasks.map((task, index) => (
+                <View key={index}>
 
                 {task.isComplete ?
                 <View style={styles.finish}>
@@ -198,25 +215,35 @@ export const TaskScreen = ({ navigation }) => {
 
 
             </View>
+
+            <View style={styles.ligne}></View>
+
             <View
-            style={{margin:20, marginTop:100}}
+                style={{margin:20, marginTop:15}}
             >
-            <TextInput
-                placeholder="Enter content"
-                onChangeText={(text) => { addTask({ content: text }) }}
-                style={{ borderWidth:2, borderColor:'skyblue', margin:20 }}
-            />
-            <Button title="submit" onPress={() => { submit() }} />
-        </View>
-      </ScrollView>
+                <TextInput
+                    placeholder="Enter content"
+                    onChangeText={(text) => { addTask({ content: text }) }}
+                    style={{ borderWidth:3, borderColor:'#34495e',backgroundColor: "#ecf0f1", margin:20, paddingLeft: 10, fontSize : 17, height : 50, borderRadius : 15 }}
+                />
+                <CustomButton
+                    key={1}
+                    id={1}
+                    actionsbtn={() => submit()}
+                    title={'Submit'}
+                />
+            </View>
+
+            </View>
+        </ScrollView>
+      </ImageBackground>
     )
 }
 
 
 const styles = StyleSheet.create({
   container: {
-    width: WIDTH,
-    flex: 1, 
+    flex: 1,
   },
   profil: {
     marginTop: 25,
@@ -224,12 +251,7 @@ const styles = StyleSheet.create({
     right: 20,
     fontSize: 40,
     alignSelf: 'flex-end',
-  },
-  title: {
-    fontSize: 35,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    paddingBottom: 20,
+    color: 'white'
   },
   notfinish: {
     width: WIDTH - 25,
@@ -278,5 +300,15 @@ const styles = StyleSheet.create({
   icon: {
       fontSize: 35,
       marginRight: 20,
-  }
+  },
+
+  ligne: {
+    borderBottomColor: 'red',
+    borderBottomWidth: 2,
+    width: '80%',
+    marginTop:'5%',
+    opacity: 0.76,
+    alignSelf: 'center',
+    height: 15
+  },
 });

@@ -12,6 +12,7 @@ export default function CustomTitle(props) {
             fontSize: 20,
             marginTop: 50,
             fontSize: 30,
+            alignSelf: 'center'
         }
      });    
     return (
