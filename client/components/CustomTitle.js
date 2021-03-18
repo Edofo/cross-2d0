@@ -11,11 +11,11 @@ export default function CustomTitle(props) {
             height: 50,
             fontSize: 20,
             marginTop: 50,
-            fontSize: 30
+            fontSize: 30,
         }
      });    
     return (
-        <Text style={styles.title}>{props.text}</Text>
+        <Text style={styles.title} key={props.id}>{props.text}</Text>
     )
 }
 

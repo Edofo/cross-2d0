@@ -108,9 +108,9 @@ export function LoginScreen({ navigation }) {
 
         <View style={styles.container}>
 
-          <Text style={styles.toDoListTitle}>Login</Text>
           <View>
             <CustomTitle
+              key={1}
               id={1}
               text={'Login'}
             />
@@ -123,7 +123,8 @@ export function LoginScreen({ navigation }) {
           <View>
           { customInput.map((input, index) => (
             <CustomInput
-              id={input.index}
+              key={index}
+              id={index}
               placeholder={input.placeholder}
               valeur={input.valeur}
               text={input.changeText}
@@ -137,7 +138,8 @@ export function LoginScreen({ navigation }) {
           <View>
           { customButton.map((button, index) => (
             <CustomButton
-              key={button.index}
+              key={index}
+              id={index}
               actionsbtn={button.actionsbtn}
               title={button.title}
             />

@@ -27,7 +27,7 @@ export default function CustomButton(props) {
      });    
     return (
         <TouchableOpacity
-            key={props.key}
+            key={props.id}
             style={styles.button}
             onPress={props.actionsbtn}
         >
