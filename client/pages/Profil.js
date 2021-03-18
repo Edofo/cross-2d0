@@ -137,12 +137,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
   },
-  bkgc:{
-    backgroundColor:'black',
-    width: '100%',
-    height: '100%',
-    opacity:0.5
-  },
   front:{
     color: 'red',
     marginBottom: -20,
@@ -157,15 +151,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: '3%',
   },
-  rect: {
-    width: 300,
-    height: 55,
-    backgroundColor: "#ded6d4",
-    borderWidth: 1.5,
-    borderColor: "#000000",
-    opacity: 0.8,
-    borderRadius: 45,
-  },
   toDoListTitle: {
     color: '#2c3e50',
     height: 50,
@@ -174,23 +159,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginRight:'40%',
     marginLeft:'25%'
-  },
-  btnstyle: {
-    width: 200,
-    height: 55,
-    backgroundColor: "#e74c3c",
-    borderWidth: 1.75,
-    borderColor: "#000000",
-    opacity: 0.8,
-    borderRadius: 15,
-    marginTop: 10
-  },
-  btntxt: {
-    color: "#bdc3c7",
-    alignSelf: 'center',
-    marginTop: '4%',
-    fontSize: 20,
-    fontWeight: 'bold'
   },
   encadrement:{
     backgroundColor:'white',
