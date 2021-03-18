@@ -11,10 +11,6 @@ export function ProfilScreen({ navigation }) {
 
   const customButton = [
     {
-        actionsbtn: () => EditProfil(),
-        title: 'Edit my Profil'
-    }, 
-    {
       actionsbtn: () => navigation.navigate('Task'),
       title: 'My tasks'
     }
