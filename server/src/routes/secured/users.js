@@ -61,7 +61,5 @@ api.put('/:id', async (req, res) => {
   }
 })
 
-api.delete('/:id', (req, res) => {
-})
 
 export default api
